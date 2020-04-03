@@ -19,8 +19,7 @@ steps:
 - task: MSBuild@1
   inputs:
     solution: '$(solution)'
-    msbuildArchitecture: 'x86'
-    platform: 'x86'
+    platform: 'AnyCPU'
     configuration: 'release'
     clean: true
 
