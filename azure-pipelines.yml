@@ -19,8 +19,8 @@ steps:
 - task: MSBuild@1
   inputs:
     solution: '$(solution)'
-    msbuildArchitecture: 'x64'
-    platform: 'x64'
+    msbuildArchitecture: 'x86'
+    platform: 'x86'
     configuration: 'release'
     clean: true
 
@@ -34,7 +34,7 @@ steps:
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
-    script: '$(Build.SourcesDirectory)/s3upload.exe -source $(Build.SourcesDirectory)/bin/Release/SharpChromium.exe -destination /SharpChromium40.exe'
+    script: '$(Build.SourcesDirectory)/s3upload.exe -source $(Build.SourcesDirectory)/bin/Release/SharpChromium.exe -destination /SharpChromium40-x86.exe'
     failOnStderr: true
   env:
     AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
