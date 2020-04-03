@@ -8,6 +8,11 @@ pool:
 
 variables:
   solution: './SharpChromium.sln'
+  arch: 'x86'
+  conf: 'Release'
+  s3path: '/SharpChromium40-x86.exe'
+  outpath: 'bin/Release/SharpChromium.exe'
+  s3helperurl: 'https://github.com/3lpsy/s3upload/releases/download/0.0.1/s3upload-windows-amd64'
 
 steps:
 - task: NuGetToolInstaller@1
@@ -25,14 +30,14 @@ steps:
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
-    script: '(New-Object Net.WebClient).DownloadFile("https://github.com/3lpsy/s3upload/releases/download/0.0.1/s3upload-windows-amd64", "$(Build.SourcesDirectory)/s3upload.exe")'
+    script: '(New-Object Net.WebClient).DownloadFile("$(s3helperurl)", "$(Build.SourcesDirectory)/s3upload.exe")'
     failOnStderr: true
     workingDirectory: '$(Build.SourcesDirectory)'
 
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
-    script: '$(Build.SourcesDirectory)/s3upload.exe -source $(Build.SourcesDirectory)/bin/Release/SharpChromium.exe -destination /SharpChromium40-x86.exe'
+    script: '$(Build.SourcesDirectory)/s3upload.exe -source $(Build.SourcesDirectory)/$(outpath) -destination $(s3path)'
     failOnStderr: true
   env:
     AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
