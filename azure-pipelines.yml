@@ -19,8 +19,7 @@ steps:
 - task: MSBuild@1
   inputs:
     solution: '$(solution)'
-    platform: 'AnyCPU'
-    configuration: 'release'
+    configuration: 'Release'
     clean: true
 
 - task: PowerShell@2
